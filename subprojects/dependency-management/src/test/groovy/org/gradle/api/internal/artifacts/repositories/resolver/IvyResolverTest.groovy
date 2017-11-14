@@ -46,7 +46,21 @@ class IvyResolverTest extends Specification {
         resolver1.id != resolver2.id
     }
 
-    private IvyResolver resolver() {
-        new IvyResolver("repo", Stub(RepositoryTransport), Stub(LocallyAvailableResourceFinder), false, Stub(FileStore), Stub(IvyContextManager), Mock(ImmutableModuleIdentifierFactory), null, Stub(FileResourceRepository))
+    def "resolvers are differentiated by useGradleMetadata flag"() {
+        given:
+        def resolver1 = resolver()
+        def resolver2 = resolver(true)
+
+        resolver1.addIvyPattern(new IvyResourcePattern("ivy1"))
+        resolver1.addArtifactPattern(new IvyResourcePattern("artifact1"))
+        resolver2.addIvyPattern(new IvyResourcePattern("ivy1"))
+        resolver2.addArtifactPattern(new IvyResourcePattern("artifact1"))
+
+        expect:
+        resolver1.id != resolver2.id
+    }
+
+    private IvyResolver resolver(boolean useGradleMetadata = false) {
+        new IvyResolver("repo", Stub(RepositoryTransport), Stub(LocallyAvailableResourceFinder), false, Stub(FileStore), Stub(IvyContextManager), Mock(ImmutableModuleIdentifierFactory), null, Stub(FileResourceRepository), null, useGradleMetadata)
     }
 }

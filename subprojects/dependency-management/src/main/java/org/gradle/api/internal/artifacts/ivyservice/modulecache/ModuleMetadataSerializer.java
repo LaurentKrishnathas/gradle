@@ -176,6 +176,7 @@ public class ModuleMetadataSerializer {
             writeExcludeRules(metadata.getExcludes());
             writeSharedInfo(metadata);
             writeNullableString(metadata.getBranch());
+            writeVariants(metadata);
         }
 
         private void writeSharedInfo(ModuleComponentResolveMetadata metadata) throws IOException {
@@ -426,6 +427,7 @@ public class ModuleMetadataSerializer {
             metadata.setBranch(branch);
             metadata.setExtraAttributes(extraAttributes);
             metadata.setExcludes(excludes);
+            readVariants(metadata);
             return metadata;
         }
 
