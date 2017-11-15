@@ -36,6 +36,8 @@ class BomSupportPluginsSmokeTest extends AbstractSmokeTest {
                 id "java"
                 ${dependencyManagementPlugin}
             }
+            gradle.experimentalFeatures.enable()
+
             ${jcenterRepository()}
 
             ${bomDeclaration}
